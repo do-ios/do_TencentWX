@@ -1,0 +1,84 @@
+{
+  "ID": "do_TencentWX",
+  "IsContainer": "0",
+  "Type": "SM",
+  "Name": "微信登陆",
+  "Version": "Internal",
+  "Description": "使用微信登录第三方应用，获取微信上的用户信息",
+  "Icon": "",
+  "IOS": {
+    "Support": 0,
+    "MinVersion": ""
+  },
+  "Android": {
+    "Support": 0,
+    "MinVersion": ""
+  },
+  "Windows": {
+    "Support": 0,
+    "MinVersion": ""
+  },
+  "WindowsPhone": {
+    "Support": 0,
+    "MinVersion": ""
+  },
+  "Html": {
+    "Support": 1,
+    "MinVersion": "5.0"
+  },
+  "Properties": [],
+  "Events": [],
+  "syncMethodes": [],
+  "asyncMethodes": [
+    {
+      "ID": "getUserInfo",
+      "Name": "获取用户信息",
+      "Description": "获取用户信息",
+      "ReturnType": "String",
+      "ReturnDesc": "返回是一个String,里面包含了用户的基本信息，头像，昵称...",
+      "Paras": [
+        {
+          "ID": "token",
+          "Name": "access_token",
+          "Type": "String",
+          "Required": 1,
+          "DefaultValue": "",
+          "Description": ""
+        },
+        {
+          "ID": "openId",
+          "Name": "openId",
+          "Type": "String",
+          "Required": 1,
+          "DefaultValue": "",
+          "Description": ""
+        }
+      ]
+    },
+    {
+      "ID": "login",
+      "Name": "使用微信登录",
+      "Description": "使用微信登录获取用户登录的信息",
+      "ReturnType": "String",
+      "ReturnDesc": "返回用户登录的信息access_token:接口调用凭证,expires_in:access_token接口调用凭证超时时间，单位（秒）,refresh_token:用户刷新access_token,openid:授权用户唯一标识,scope:用户授权的作用域，使用逗号（,）分隔,unionid:只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段。如：{\\\"access_token\\\": \\\"OezXcEiiBSKSxW0eoylIeNmM392wadl5TNGqax5q62R4Bk6yYih44rt6nFGc4mQ5Zcj2-fr0TmQ9NqQoQh51G6QTQPDbxGS6Gn958rMG_m_trc7_YEKCwvA4X6Ke6Fe57OAjGWYwfhiRAnee4T454Q\\\",\\\"expires_in\\\": 7200,\\\"refresh_token\\\": \\\"OezXcEiiBSKSxW0eoylIeNmM392wadl5TNGqax5q62R4Bk6yYih44rt6nFGc4mQ5SSHYhR_VUPjQknMNPPg9qKACRpYDf3XS7BuX7nnWpqvyt8DfLo2weY5pqaOm6_vWKRlSmqp7wd6wqNt3QAFLlQ\\\",\\\"openid\\\": \\\"oJwk0s6TXduniuu4EpdzkElmnRr0\\\",\\\"scope\\\": \\\"snsapi_userinfo\\\",\\\"unionid\\\": \\\"ow8Kht2du59Ljc22-MU_O3zLvtkQ\\\"}",
+      "Paras": [
+        {
+          "ID": "appId",
+          "Name": "appId",
+          "Type": "String",
+          "Required": 1,
+          "DefaultValue": "",
+          "Description": "在微信开发平台申请的appId"
+        },
+        {
+          "ID": "appSecret",
+          "Name": "appSecret",
+          "Type": "String",
+          "Required": 1,
+          "DefaultValue": "",
+          "Description": "在微信开发平台申请的appSecret"
+        }
+      ]
+    }
+  ]
+}
