@@ -10,5 +10,5 @@
 #import <UIKit/UIKit.h>
 #import "doIAppDelegate.h"
 @interface do_TencentWX_App : NSObject<doIAppDelegate>
-
++(id) Instance;
 @end

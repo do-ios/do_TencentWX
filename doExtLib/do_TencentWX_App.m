@@ -9,46 +9,24 @@
 #import "do_TencentWX_App.h"
 #import "WXApi.h"
 #import "doScriptEngineHelper.h"
+static do_TencentWX_App* instance;
 
 @implementation do_TencentWX_App
-@synthesize ThridPartyID;
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+
+@synthesize OpenURLScheme;
++(id) Instance
 {
-    return YES;
+    if(instance==nil)
+        instance = [[do_TencentWX_App alloc]init];
+    return instance;
 }
-- (void)applicationWillResignActive:(UIApplication *)application
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    
-}
-- (void)applicationDidEnterBackground:(UIApplication *)application
-{
-    
-}
-- (void)applicationWillEnterForeground:(UIApplication *)application
-{
-    
-}
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-    
-}
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-    
-}
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation fromThridParty:(NSString*)_id
-{
-    if([_id isEqualToString:self.ThridPartyID]){
-        return [WXApi handleOpenURL:url delegate:( (id<WXApiDelegate>)[doScriptEngineHelper ParseSingletonModule:nil :@"do_TencentWX"])];
-    }
-    return NO;
-}
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url fromThridParty:(NSString*)_id
-{
-    if([_id isEqualToString:self.ThridPartyID]){
     return [WXApi handleOpenURL:url delegate:( (id<WXApiDelegate>)[doScriptEngineHelper ParseSingletonModule:nil :@"do_TencentWX"])];
-    }
-    return NO;
+}
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    return [WXApi handleOpenURL:url delegate:( (id<WXApiDelegate>)[doScriptEngineHelper ParseSingletonModule:nil :@"do_TencentWX"])];
 }
 @end

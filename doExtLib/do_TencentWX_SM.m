@@ -39,8 +39,8 @@
         [NSException raise:@"wechat" format:@"wechat的appId无效!",nil];
     }
     [WXApi registerApp:appId];
-    do_TencentWX_App* _app = [AppDelegate GetAppDelegateObject:[do_TencentWX_App class]];
-    _app.ThridPartyID = appId;
+    do_TencentWX_App* _app = [do_TencentWX_App Instance];
+    _app.OpenURLScheme = appId;
     
     //构造SendAuthReq结构体
     SendAuthReq* req =[[SendAuthReq alloc ] init ] ;

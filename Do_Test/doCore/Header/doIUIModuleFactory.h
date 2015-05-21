@@ -21,5 +21,5 @@
 - (doUIModule *) CreateUIModule: (NSString *)_typeID;
 - (void)BindUIModuleView:(doUIModule *) _module;
 - (void) RegistGroup: (id<doIUIModuleGroup>) _uiModuleGroup;
-
+- (doUIModule *) CreateUIModuleBySourceFile:(NSString*) modelStr :(id<doIPage>) _page :(BOOL) isLoadScript;
 @end

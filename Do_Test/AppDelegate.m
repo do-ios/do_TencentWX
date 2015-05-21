@@ -14,14 +14,12 @@
    
     }
 @end
-static do_TencentWX_App * _app;
 
 @implementation AppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] ;
-    _app = [[do_TencentWX_App alloc]init];
     ViewController *myC = [[ViewController alloc] init];
     [self.window setRootViewController:myC];
     [self.window makeKeyAndVisible];
@@ -51,10 +49,6 @@ static do_TencentWX_App * _app;
 }
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
-    return [_app application:application handleOpenURL:url fromThridParty:_app.ThridPartyID];
-}
-+ (id) GetAppDelegateObject:(Class) classname
-{
-    return _app;
+    return [[do_TencentWX_App Instance] application:application handleOpenURL:url];
 }
 @end

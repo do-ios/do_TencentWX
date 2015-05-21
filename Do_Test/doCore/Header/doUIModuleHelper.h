@@ -19,6 +19,7 @@
 + (void)HandleViewProperChanged:(id) _self :(doUIModule *)_uiModule :(NSMutableDictionary*) _changedValues;
 + (void)HandleBasicViewProperChanged:(doUIModule *)_uiModule :(NSMutableDictionary*) _changedValues;
 + (void) OnRedraw:(doUIModule*) _uiModule;
++(void) OnResize:(doUIModule*) _uiModule;
 + (UIColor*) GetColorFromString: (NSString*) _colorStr : (UIColor*) _default;
 + (BOOL) IsLandscape;
 
