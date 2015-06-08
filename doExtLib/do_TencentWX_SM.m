@@ -50,6 +50,33 @@
     [WXApi sendReq:req];
 }
 
+- (void)pay:(NSArray *)parms
+{
+    //异步耗时操作，但是不需要启动线程，框架会自动加载一个后台线程处理这个函数
+    NSDictionary *_dictParas = [parms objectAtIndex:0];
+    
+    //参数字典_dictParas
+    scritEngine = [parms objectAtIndex:1];
+    //自己的代码实现
+    
+    callBackName = [parms objectAtIndex:2];
+    PayReq *req = [[PayReq alloc]init];
+    appId = [doJsonHelper GetOneText:_dictParas :@"appId" :@""];
+    do_TencentWX_App* _app = [do_TencentWX_App Instance];
+    _app.OpenURLScheme = appId;
+    req.openID = appId;
+    [WXApi registerApp:appId];
+    req.partnerId = [doJsonHelper GetOneText:_dictParas :@"partnerId" :@""];
+    req.prepayId = [doJsonHelper GetOneText:_dictParas :@"prepayId" :@""];
+    req.package = [doJsonHelper GetOneText:_dictParas :@"package" :@""];
+    req.nonceStr = [doJsonHelper GetOneText:_dictParas :@"nonceStr" :@""];
+    req.timeStamp = [doJsonHelper GetOneInteger:_dictParas :@"timeStamp" :0];
+    req.sign = [doJsonHelper GetOneText:_dictParas :@"sign" :@""];
+    [WXApi sendReq:req];
+}
+
+
+
 /*! @brief 收到一个来自微信的请求，第三方应用程序处理完后调用sendResp向微信发送结果
  *
  * 收到一个来自微信的请求，异步处理完成后必须调用sendResp发送处理结果给微信。
@@ -114,6 +141,25 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
     }
+    else if ([resp isKindOfClass:[PayResp class]])
+    {
+        int result = 1;
+        switch (resp.errCode) {
+            case WXSuccess:
+                result = 0;
+                break;
+            case WXErrCodeCommon:
+                result = -1;
+                break;
+            case WXErrCodeUserCancel:
+                result = -2;
+                break;
+            default:
+                break;
+        }
+        doInvokeResult *invokeResult = [[doInvokeResult alloc]init:self.UniqueKey];
+        [scritEngine Callback:callBackName :invokeResult];
+    }
     else if([resp isKindOfClass:[SendAuthResp class]])
     {
         SendAuthResp *temp = (SendAuthResp*)resp;
@@ -149,7 +195,8 @@
         }
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"add card resp" message:cardStr delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-    }else
+    }
+    else
     {
         scritEngine = nil;
     }

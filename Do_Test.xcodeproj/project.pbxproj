@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B49DFEE1B0DBBF000091FD9 /* do_TencentWX_App.h in Resources */ = {isa = PBXBuildFile; fileRef = CCFAEB241B04416300AED8D5 /* do_TencentWX_App.h */; };
+		3B49DFEF1B0DBBF000091FD9 /* do_TencentWX_ISM.h in Resources */ = {isa = PBXBuildFile; fileRef = CCFAEB261B04416300AED8D5 /* do_TencentWX_ISM.h */; };
+		3B49DFF01B0DBBF000091FD9 /* do_TencentWX_SM.h in Resources */ = {isa = PBXBuildFile; fileRef = CCFAEB271B04416300AED8D5 /* do_TencentWX_SM.h */; };
 		A44BC6701AEE005E001580AA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A44BC66F1AEE005E001580AA /* main.m */; };
 		A44BC6731AEE005E001580AA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A44BC6721AEE005E001580AA /* AppDelegate.m */; };
 		A44BC6761AEE005E001580AA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A44BC6751AEE005E001580AA /* ViewController.m */; };
@@ -429,9 +432,9 @@
 			productReference = A44BC66A1AEE005E001580AA /* Do_Test.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A44BC7B11AEE19CC001580AA /* doExtLib */ = {
+		A44BC7B11AEE19CC001580AA /* doTencentWXLib */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A44BC7C71AEE19CD001580AA /* Build configuration list for PBXNativeTarget "doExtLib" */;
+			buildConfigurationList = A44BC7C71AEE19CD001580AA /* Build configuration list for PBXNativeTarget "doTencentWXLib" */;
 			buildPhases = (
 				A44BC7AE1AEE19CC001580AA /* Sources */,
 				A44BC7AF1AEE19CC001580AA /* Frameworks */,
@@ -441,7 +444,7 @@
 			);
 			dependencies = (
 			);
-			name = doExtLib;
+			name = doTencentWXLib;
 			productName = doExtLib;
 			productReference = A44BC7B21AEE19CC001580AA /* libdoExtLib.a */;
 			productType = "com.apple.product-type.library.static";
@@ -477,7 +480,7 @@
 			projectRoot = "";
 			targets = (
 				A44BC6691AEE005E001580AA /* Do_Test */,
-				A44BC7B11AEE19CC001580AA /* doExtLib */,
+				A44BC7B11AEE19CC001580AA /* doTencentWXLib */,
 			);
 		};
 /* End PBXProject section */
@@ -487,6 +490,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B49DFEE1B0DBBF000091FD9 /* do_TencentWX_App.h in Resources */,
+				3B49DFEF1B0DBBF000091FD9 /* do_TencentWX_ISM.h in Resources */,
+				3B49DFF01B0DBBF000091FD9 /* do_TencentWX_SM.h in Resources */,
 				CCFAEAFF1B0321E300AED8D5 /* do_Test.json in Resources */,
 				A44BC67B1AEE005E001580AA /* Images.xcassets in Resources */,
 			);
@@ -712,7 +718,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A44BC7C71AEE19CD001580AA /* Build configuration list for PBXNativeTarget "doExtLib" */ = {
+		A44BC7C71AEE19CD001580AA /* Build configuration list for PBXNativeTarget "doTencentWXLib" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A44BC7C31AEE19CD001580AA /* Debug */,
