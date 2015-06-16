@@ -17,6 +17,8 @@
 #import <UIKit/UIKit.h>
 #import "do_TencentWX_App.h"
 #import "AppDelegate.h"
+#import "doIOHelper.h"
+#import "doIPage.h"
 
 @interface do_TencentWX_SM (WeChat)<WXApiDelegate>
 {
@@ -75,7 +77,82 @@
     [WXApi sendReq:req];
 }
 
+- (void)share:(NSArray *)parms
+{
+    NSDictionary *_dictParas = [parms objectAtIndex:0];
+    //参数字典_dictParas
+    scritEngine = [parms objectAtIndex:1];
+    //自己的代码实现
+    callBackName = [parms objectAtIndex:2];
+    appId = [doJsonHelper GetOneText:_dictParas :@"appId" :@""];
+    do_TencentWX_App* _app = [do_TencentWX_App Instance];
+    _app.OpenURLScheme = appId;
+    int scene = [doJsonHelper GetOneInteger:_dictParas :@"scene" :0];
+    int type = [doJsonHelper GetOneInteger:_dictParas :@"type" :0];
+    NSString *title = [doJsonHelper GetOneText:_dictParas :@"title" :@""];
+    NSString *content = [doJsonHelper GetOneText:_dictParas :@"content" :@""];
+    NSString *url = [doJsonHelper GetOneText:_dictParas :@"url" :@""];
+    NSString *image = [doJsonHelper GetOneText:_dictParas :@"image" :@""];
+    NSString *audio = [doJsonHelper GetOneText:_dictParas :@"audio" :@""];
+    SendMessageToWXReq *req = [self getMessage:type withScene:scene withTitle:title withContent:content withUrl:url withImage:image withAudio:audio];
+    [WXApi sendReq:req];
+}
 
+- (SendMessageToWXReq *)getMessage:(int)type withScene:(int)scene withTitle:(NSString *)title withContent:(NSString *)content withUrl:(NSString *)url withImage:(NSString *)image withAudio:(NSString *)audio
+{
+    SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
+    req.scene = scene;
+    switch (type) {
+        case 0:
+        {
+            WXMediaMessage *message = [WXMediaMessage message];
+            message.title = title;
+            message.description = content;
+            WXImageObject *ext = [WXImageObject object];
+            ext.imageUrl = image;
+            message.mediaObject = ext;
+            req.bText = NO;
+            req.message = message;
+
+        }
+            break;
+        case 1:
+        {
+            WXMediaMessage *message = [WXMediaMessage message];
+            message.title = title;
+            message.description = content;
+            WXImageObject *ext = [WXImageObject object];
+            NSString *imagePath = [doIOHelper GetLocalFileFullPath:scritEngine.CurrentPage.CurrentApp :image];
+            ext.imageData = [NSData dataWithContentsOfFile:imagePath];
+            message.mediaObject = ext;
+            req.bText = NO;
+            req.message = message;
+
+        }
+            break;
+        case 2:
+        {
+            WXMediaMessage *message = [WXMediaMessage message];
+            message.thumbData = nil;
+            message.title = title;
+            message.description = content;
+            WXMusicObject *ext = [WXMusicObject object];
+            ext.musicUrl = audio;
+            if(audio.length<=0){
+                [NSException raise:@"TencentWX" format:@"WX分享的audio的无效!",nil];
+            }
+            message.mediaObject = ext;
+            req.bText = NO;
+            req.message = message;
+
+        }
+            break;
+
+        default:
+            break;
+    }
+    return req;
+}
 
 /*! @brief 收到一个来自微信的请求，第三方应用程序处理完后调用sendResp向微信发送结果
  *
@@ -135,11 +212,17 @@
 {
     if([resp isKindOfClass:[SendMessageToWXResp class]])
     {
-        NSString *strTitle = [NSString stringWithFormat:@"发送媒体消息结果"];
-        NSString *strMsg = [NSString stringWithFormat:@"errcode:%d", resp.errCode];
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
+        int resultCode = resp.errCode;
+        doInvokeResult* result = [[doInvokeResult alloc]init];
+        if (resultCode) {
+            [result SetResultBoolean:YES];
+        }
+        else
+        {
+            [result SetResultBoolean:NO];
+        }
+        [scritEngine Callback:callBackName :result ];
+        scritEngine = nil;
     }
     else if ([resp isKindOfClass:[PayResp class]])
     {
@@ -155,6 +238,7 @@
                 result = -2;
                 break;
             default:
+                [NSException raise:@"微信支付" format:@"微信支付失败",nil];
                 break;
         }
         doInvokeResult *invokeResult = [[doInvokeResult alloc]init:self.UniqueKey];
