@@ -242,6 +242,7 @@
                 break;
         }
         doInvokeResult *invokeResult = [[doInvokeResult alloc]init:self.UniqueKey];
+        [invokeResult SetResultInteger:result];
         [scritEngine Callback:callBackName :invokeResult];
     }
     else if([resp isKindOfClass:[SendAuthResp class]])
