@@ -85,6 +85,7 @@
     //自己的代码实现
     callBackName = [parms objectAtIndex:2];
     appId = [doJsonHelper GetOneText:_dictParas :@"appId" :@""];
+    [WXApi registerApp:appId];
     do_TencentWX_App* _app = [do_TencentWX_App Instance];
     _app.OpenURLScheme = appId;
     int scene = [doJsonHelper GetOneInteger:_dictParas :@"scene" :0];
@@ -105,15 +106,19 @@
     switch (type) {
         case 0:
         {
+            NSString *imagePath = [doIOHelper GetLocalFileFullPath:scritEngine.CurrentPage.CurrentApp :image];
             WXMediaMessage *message = [WXMediaMessage message];
             message.title = title;
             message.description = content;
-            WXImageObject *ext = [WXImageObject object];
-            ext.imageUrl = image;
+            [message setThumbImage:[UIImage imageNamed:imagePath]];
+            
+            WXWebpageObject *ext = [WXWebpageObject object];
+            ext.webpageUrl =url;
+            
             message.mediaObject = ext;
             req.bText = NO;
             req.message = message;
-
+            req.scene = scene;
         }
             break;
         case 1:
@@ -133,7 +138,19 @@
         case 2:
         {
             WXMediaMessage *message = [WXMediaMessage message];
-            message.thumbData = nil;
+            NSString *imagePath;
+            if ([image hasPrefix:@"http"]) {
+                imagePath = image;
+                [message setThumbData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imagePath]]];
+//                message.thumbData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imagePath]];
+
+            }
+            else
+            {
+                imagePath = [doIOHelper GetLocalFileFullPath:scritEngine.CurrentPage.CurrentApp :image];
+                message.thumbData = [NSData dataWithContentsOfFile:imagePath];
+
+            }
             message.title = title;
             message.description = content;
             WXMusicObject *ext = [WXMusicObject object];
