@@ -110,7 +110,7 @@
             WXMediaMessage *message = [WXMediaMessage message];
             message.title = title;
             message.description = content;
-            [message setThumbImage:[UIImage imageNamed:imagePath]];
+            [message setThumbImage:[UIImage imageWithData:[NSData dataWithContentsOfFile:imagePath]]];
             
             WXWebpageObject *ext = [WXWebpageObject object];
             ext.webpageUrl =url;
@@ -232,11 +232,11 @@
         int resultCode = resp.errCode;
         doInvokeResult* result = [[doInvokeResult alloc]init];
         if (resultCode) {
-            [result SetResultBoolean:YES];
+            [result SetResultBoolean:NO];
         }
         else
         {
-            [result SetResultBoolean:NO];
+            [result SetResultBoolean:YES];
         }
         [scritEngine Callback:callBackName :result ];
         scritEngine = nil;
