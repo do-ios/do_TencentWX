@@ -106,12 +106,20 @@
     switch (type) {
         case 0:
         {
-            NSString *imagePath = [doIOHelper GetLocalFileFullPath:scritEngine.CurrentPage.CurrentApp :image];
+            //支持网络图片
             WXMediaMessage *message = [WXMediaMessage message];
+            if ([image hasPrefix:@"http"]) {
+                [message setThumbData:[NSData dataWithContentsOfURL:[NSURL URLWithString:image]]];
+            }
+            else
+            {
+                NSString *imagePath = [doIOHelper GetLocalFileFullPath:scritEngine.CurrentPage.CurrentApp :image];
+                message.thumbData = [NSData dataWithContentsOfFile:imagePath];
+            }
+
+            
             message.title = title;
             message.description = content;
-            [message setThumbImage:[UIImage imageWithData:[NSData dataWithContentsOfFile:imagePath]]];
-            
             WXWebpageObject *ext = [WXWebpageObject object];
             ext.webpageUrl =url;
             
@@ -142,8 +150,6 @@
             if ([image hasPrefix:@"http"]) {
                 imagePath = image;
                 [message setThumbData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imagePath]]];
-//                message.thumbData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imagePath]];
-
             }
             else
             {
@@ -302,5 +308,13 @@
     {
         scritEngine = nil;
     }
+}
+-(UIImage *)downImage:(NSString *)url
+{
+    NSURLSession *session = [NSURLSession sharedSession];
+    [session downloadTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+    }];
+    return nil;
 }
 @end

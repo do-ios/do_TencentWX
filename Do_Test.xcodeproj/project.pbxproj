@@ -10,6 +10,8 @@
 		3B49DFEE1B0DBBF000091FD9 /* do_TencentWX_App.h in Resources */ = {isa = PBXBuildFile; fileRef = CCFAEB241B04416300AED8D5 /* do_TencentWX_App.h */; };
 		3B49DFEF1B0DBBF000091FD9 /* do_TencentWX_ISM.h in Resources */ = {isa = PBXBuildFile; fileRef = CCFAEB261B04416300AED8D5 /* do_TencentWX_ISM.h */; };
 		3B49DFF01B0DBBF000091FD9 /* do_TencentWX_SM.h in Resources */ = {isa = PBXBuildFile; fileRef = CCFAEB271B04416300AED8D5 /* do_TencentWX_SM.h */; };
+		3B6E3B3F1CFD2B32009A9478 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B6E3B3A1CFD2B32009A9478 /* libWeChatSDK.a */; };
+		3B6E3B401CFD2B61009A9478 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCFAEB351B044BF200AED8D5 /* UIKit.framework */; };
 		A44BC6701AEE005E001580AA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A44BC66F1AEE005E001580AA /* main.m */; };
 		A44BC6731AEE005E001580AA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A44BC6721AEE005E001580AA /* AppDelegate.m */; };
 		A44BC6761AEE005E001580AA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A44BC6751AEE005E001580AA /* ViewController.m */; };
@@ -46,10 +48,8 @@
 		CCFAEAFF1B0321E300AED8D5 /* do_Test.json in Resources */ = {isa = PBXBuildFile; fileRef = CCFAEAF31B02F8DD00AED8D5 /* do_Test.json */; };
 		CCFAEB2D1B04416400AED8D5 /* do_TencentWX_App.m in Sources */ = {isa = PBXBuildFile; fileRef = CCFAEB251B04416300AED8D5 /* do_TencentWX_App.m */; };
 		CCFAEB2E1B04416400AED8D5 /* do_TencentWX_SM.m in Sources */ = {isa = PBXBuildFile; fileRef = CCFAEB281B04416300AED8D5 /* do_TencentWX_SM.m */; };
-		CCFAEB2F1B04416400AED8D5 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CCFAEB291B04416400AED8D5 /* libWeChatSDK.a */; };
 		CCFAEB301B04461B00AED8D5 /* do_TencentWX_App.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CCFAEB241B04416300AED8D5 /* do_TencentWX_App.h */; };
 		CCFAEB311B04461C00AED8D5 /* do_TencentWX_SM.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CCFAEB271B04416300AED8D5 /* do_TencentWX_SM.h */; };
-		CCFAEB321B04462900AED8D5 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CCFAEB291B04416400AED8D5 /* libWeChatSDK.a */; };
 		CCFAEB331B044BB400AED8D5 /* do_TencentWX_App.m in Sources */ = {isa = PBXBuildFile; fileRef = CCFAEB251B04416300AED8D5 /* do_TencentWX_App.m */; };
 		CCFAEB341B044BB400AED8D5 /* do_TencentWX_SM.m in Sources */ = {isa = PBXBuildFile; fileRef = CCFAEB281B04416300AED8D5 /* do_TencentWX_SM.m */; };
 		CCFAEB391B046AC000AED8D5 /* doModuleFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = CCFAEB381B046AC000AED8D5 /* doModuleFactory.m */; };
@@ -70,6 +70,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3B6E3B3A1CFD2B32009A9478 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		3B6E3B3B1CFD2B32009A9478 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		3B6E3B3C1CFD2B32009A9478 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
+		3B6E3B3D1CFD2B32009A9478 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		3B6E3B3E1CFD2B32009A9478 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		A44BC66A1AEE005E001580AA /* Do_Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Do_Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A44BC66E1AEE005E001580AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A44BC66F1AEE005E001580AA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -177,10 +182,6 @@
 		CCFAEB261B04416300AED8D5 /* do_TencentWX_ISM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = do_TencentWX_ISM.h; sourceTree = "<group>"; };
 		CCFAEB271B04416300AED8D5 /* do_TencentWX_SM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = do_TencentWX_SM.h; sourceTree = "<group>"; };
 		CCFAEB281B04416300AED8D5 /* do_TencentWX_SM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = do_TencentWX_SM.m; sourceTree = "<group>"; };
-		CCFAEB291B04416400AED8D5 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
-		CCFAEB2A1B04416400AED8D5 /* read_me.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = read_me.txt; sourceTree = "<group>"; };
-		CCFAEB2B1B04416400AED8D5 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
-		CCFAEB2C1B04416400AED8D5 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		CCFAEB351B044BF200AED8D5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		CCFAEB371B046AC000AED8D5 /* doModuleFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = doModuleFactory.h; sourceTree = "<group>"; };
 		CCFAEB381B046AC000AED8D5 /* doModuleFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = doModuleFactory.m; sourceTree = "<group>"; };
@@ -197,7 +198,6 @@
 				CCFAEABB1B00EF0C00AED8D5 /* CoreTelephony.framework in Frameworks */,
 				CCFAEAB91B00EED800AED8D5 /* AudioToolbox.framework in Frameworks */,
 				CCFAEAB71B00EE2F00AED8D5 /* MessageUI.framework in Frameworks */,
-				CCFAEB321B04462900AED8D5 /* libWeChatSDK.a in Frameworks */,
 				CCFAEAB51B00EE1D00AED8D5 /* AVFoundation.framework in Frameworks */,
 				CCFAEAB31B00EE0700AED8D5 /* libsqlite3.dylib in Frameworks */,
 				CCFAEAB11B00EDF600AED8D5 /* libxml2.dylib in Frameworks */,
@@ -221,13 +221,26 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CCFAEB2F1B04416400AED8D5 /* libWeChatSDK.a in Frameworks */,
+				3B6E3B401CFD2B61009A9478 /* UIKit.framework in Frameworks */,
+				3B6E3B3F1CFD2B32009A9478 /* libWeChatSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3B6E3B391CFD2B32009A9478 /* WXSDK */ = {
+			isa = PBXGroup;
+			children = (
+				3B6E3B3A1CFD2B32009A9478 /* libWeChatSDK.a */,
+				3B6E3B3B1CFD2B32009A9478 /* README.txt */,
+				3B6E3B3C1CFD2B32009A9478 /* WechatAuthSDK.h */,
+				3B6E3B3D1CFD2B32009A9478 /* WXApi.h */,
+				3B6E3B3E1CFD2B32009A9478 /* WXApiObject.h */,
+			);
+			path = WXSDK;
+			sourceTree = "<group>";
+		};
 		A44BC6611AEE005E001580AA = {
 			isa = PBXGroup;
 			children = (
@@ -308,15 +321,12 @@
 		A44BC7B31AEE19CD001580AA /* doExtLib */ = {
 			isa = PBXGroup;
 			children = (
+				3B6E3B391CFD2B32009A9478 /* WXSDK */,
 				CCFAEB241B04416300AED8D5 /* do_TencentWX_App.h */,
 				CCFAEB251B04416300AED8D5 /* do_TencentWX_App.m */,
 				CCFAEB261B04416300AED8D5 /* do_TencentWX_ISM.h */,
 				CCFAEB271B04416300AED8D5 /* do_TencentWX_SM.h */,
 				CCFAEB281B04416300AED8D5 /* do_TencentWX_SM.m */,
-				CCFAEB291B04416400AED8D5 /* libWeChatSDK.a */,
-				CCFAEB2A1B04416400AED8D5 /* read_me.txt */,
-				CCFAEB2B1B04416400AED8D5 /* WXApi.h */,
-				CCFAEB2C1B04416400AED8D5 /* WXApiObject.h */,
 				CCFAEAF31B02F8DD00AED8D5 /* do_Test.json */,
 			);
 			path = doExtLib;
@@ -673,6 +683,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/doExtLib",
+					"$(PROJECT_DIR)/doExtLib/WXSDK",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
@@ -689,6 +700,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/doExtLib",
+					"$(PROJECT_DIR)/doExtLib/WXSDK",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -21,6 +21,11 @@ static do_TencentWX_App* instance;
         instance = [[do_TencentWX_App alloc]init];
     return instance;
 }
+-(BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    [WXApi registerApp:@"wxc422eccce175b3e1"];
+    return YES;
+}
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
     return [WXApi handleOpenURL:url delegate:( (id<WXApiDelegate>)[doScriptEngineHelper ParseSingletonModule:nil :@"do_TencentWX"])];
