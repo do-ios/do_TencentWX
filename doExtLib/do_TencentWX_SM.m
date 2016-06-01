@@ -132,11 +132,13 @@
         case 1:
         {
             WXMediaMessage *message = [WXMediaMessage message];
-            message.title = title;
-            message.description = content;
+//            message.title = title;
+//            message.description = content;
             WXImageObject *ext = [WXImageObject object];
             NSString *imagePath = [doIOHelper GetLocalFileFullPath:scritEngine.CurrentPage.CurrentApp :image];
+            UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfFile:imagePath]];
             ext.imageData = [NSData dataWithContentsOfFile:imagePath];
+            message.thumbData = UIImageJPEGRepresentation(image, 0.5);
             message.mediaObject = ext;
             req.bText = NO;
             req.message = message;
