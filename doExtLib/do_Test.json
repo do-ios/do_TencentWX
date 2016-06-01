@@ -4,15 +4,15 @@
     "Type": "SM",
     "Name": "微信登陆",
     "Version": "Internal",
-    "Description": "使用微信登录第三方应用，获取微信上的用户信息",
-    "Icon": "https://deviceone.blob.core.chinacloudapi.cn/store/R/20150624/c8656b22-98e6-45b5-8cb5-763e16dd3bf1.png",
+    "Description": "接入微信开放平台，可使用微信登录、分享和支付功能",
+    "Icon": "https://do-store.oss-cn-beijing.aliyuncs.com/D/20160121/do_TencentWX/微信呢.jpg",
     "IOS": {
         "Support": 1,
         "MinVersion": "7.0"
     },
     "Android": {
         "Support": 1,
-        "MinVersion": "14"
+        "MinVersion": "4.0"
     },
     "Windows": {
         "Support": 0,
@@ -28,14 +28,23 @@
     },
     "Properties": [],
     "Events": [],
-    "syncMethodes": [],
+    "syncMethodes": [
+                     {
+                     "ID": "isWXAppInstalled",
+                     "Name": "微信APP是否安装",
+                     "Description": "判断当前设备中是否安装微信APP",
+                     "ReturnType": "Bool",
+                     "ReturnDesc": "true 安装，false 没有安装",
+                     "Paras": []
+                     }
+                     ],
     "asyncMethodes": [
                       {
                       "ID": "login",
-                      "Name": "使用微信登录",
+                      "Name": "微信登录",
                       "Description": "使用微信登录获取用户登录的信息",
                       "ReturnType": "Node",
-                      "ReturnDesc": "用户点击授权后，微信客户端会被拉起，跳转至授权界面，用户在该界面点击允许或取消，返回数据给调用方。返回\r\nErrCode\tERR_OK = 0(用户同意)\r\nERR_AUTH_DENIED = -4（用户拒绝授权）\r\nERR_USER_CANCEL = -2（用户取消）\r\ncode\t用户换取access_token的code，仅在ErrCode为0时有效\r\nstate\t第三方程序发送时用来标识其请求的唯一性的标志，由第三方程序调用sendReq时传入，由微信终端回传，state字符串长度不能超过1K\r\nlang\t微信客户端当前语言\r\ncountry\t微信用户当前国家信息",
+                      "ReturnDesc": "用户点击授权后，微信客户端会被调起，跳转至授权界面，用户在该界面点击允许或取消，返回数据给调用方。返回\r\nErrCode\tERR_OK = 0(用户同意)\r\nERR_AUTH_DENIED = -4（用户拒绝授权）\r\nERR_USER_CANCEL = -2（用户取消）\r\ncode\t用户换取access_token的code，仅在ErrCode为0时有效\r\nstate\t第三方程序发送时用来标识其请求的唯一性的标志，由第三方程序调用sendReq时传入，由微信终端回传，state字符串长度不能超过1K\r\nlang\t微信客户端当前语言\r\ncountry\t微信用户当前国家信息",
                       "Paras": [
                                 {
                                 "ID": "appId",
@@ -49,7 +58,7 @@
                       },
                       {
                       "ID": "pay",
-                      "Name": "支付",
+                      "Name": "微信支付",
                       "Description": "调用微信支付",
                       "ReturnType": "Number",
                       "ReturnDesc": "0 支付完成,-1 错误,-2 用户取消",
@@ -132,7 +141,7 @@
                                 "Name": "分享场景",
                                 "Type": "Number",
                                 "Required": 1,
-                                "DefaultValue": "",
+                                "DefaultValue": "0",
                                 "Description": "0：分享到微信好友；1：分享到微信朋友圈"
                                 },
                                 {
@@ -140,7 +149,7 @@
                                 "Name": "分享的类型",
                                 "Type": "Number",
                                 "Required": 1,
-                                "DefaultValue": "",
+                                "DefaultValue": "0",
                                 "Description": "0：默认，图文分享；1：纯图分享，只支持本地图片；2：音乐分享"
                                 },
                                 {
@@ -157,7 +166,7 @@
                                 "Type": "String",
                                 "Required": 0,
                                 "DefaultValue": "",
-                                "Description": "分享的文本内容,图文分享时候不能为空"
+                                "Description": "分享的文本内容,图文分享时不能为空"
                                 },
                                 {
                                 "ID": "url",
@@ -165,7 +174,7 @@
                                 "Type": "String",
                                 "Required": 0,
                                 "DefaultValue": "",
-                                "Description": "分享后点击文本后打开的地址"
+                                "Description": "分享后点击文本打开的地址"
                                 },
                                 {
                                 "ID": "image",

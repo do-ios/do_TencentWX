@@ -28,7 +28,17 @@
 @implementation do_TencentWX_SM
 #pragma mark -
 #pragma mark - 同步异步方法的实现
-
+//同步
+- (void)isWXAppInstalled:(NSArray *)parms
+{
+    id<doIScriptEngine> _scritEngine = [parms objectAtIndex:1];
+    //自己的代码实现
+    
+    doInvokeResult *_invokeResult = [parms objectAtIndex:2];
+    //_invokeResult设置返回值
+    BOOL isInstalled = [WXApi isWXAppInstalled];
+    [_invokeResult SetResultBoolean:isInstalled];
+}
 //异步
 - (void)login:(NSArray *)parms
 {

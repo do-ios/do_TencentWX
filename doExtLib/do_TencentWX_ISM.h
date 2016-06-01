@@ -12,6 +12,7 @@
 
 @required
 //实现同步或异步方法，parms中包含了所需用的属性
+- (void)isWXAppInstalled:(NSArray *)parms;
 - (void)login:(NSArray *)parms;
 - (void)pay:(NSArray *)parms;
 - (void)share:(NSArray *)parms;
