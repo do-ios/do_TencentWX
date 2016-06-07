@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B0CB6F71D06689A00293A7F /* tencentWX.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3B0CB6F61D0667F500293A7F /* tencentWX.plist */; };
 		3B49DFEE1B0DBBF000091FD9 /* do_TencentWX_App.h in Resources */ = {isa = PBXBuildFile; fileRef = CCFAEB241B04416300AED8D5 /* do_TencentWX_App.h */; };
 		3B49DFEF1B0DBBF000091FD9 /* do_TencentWX_ISM.h in Resources */ = {isa = PBXBuildFile; fileRef = CCFAEB261B04416300AED8D5 /* do_TencentWX_ISM.h */; };
 		3B49DFF01B0DBBF000091FD9 /* do_TencentWX_SM.h in Resources */ = {isa = PBXBuildFile; fileRef = CCFAEB271B04416300AED8D5 /* do_TencentWX_SM.h */; };
@@ -62,6 +63,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				3B0CB6F71D06689A00293A7F /* tencentWX.plist in CopyFiles */,
 				CCFAEB301B04461B00AED8D5 /* do_TencentWX_App.h in CopyFiles */,
 				CCFAEB311B04461C00AED8D5 /* do_TencentWX_SM.h in CopyFiles */,
 			);
@@ -70,6 +72,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3B0CB6F61D0667F500293A7F /* tencentWX.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = tencentWX.plist; sourceTree = "<group>"; };
 		3B6E3B3A1CFD2B32009A9478 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		3B6E3B3B1CFD2B32009A9478 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		3B6E3B3C1CFD2B32009A9478 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
@@ -321,6 +324,7 @@
 		A44BC7B31AEE19CD001580AA /* doExtLib */ = {
 			isa = PBXGroup;
 			children = (
+				3B0CB6F61D0667F500293A7F /* tencentWX.plist */,
 				3B6E3B391CFD2B32009A9478 /* WXSDK */,
 				CCFAEB241B04416300AED8D5 /* do_TencentWX_App.h */,
 				CCFAEB251B04416300AED8D5 /* do_TencentWX_App.m */,

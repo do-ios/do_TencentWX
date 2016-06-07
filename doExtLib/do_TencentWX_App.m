@@ -9,6 +9,9 @@
 #import "do_TencentWX_App.h"
 #import "WXApi.h"
 #import "doScriptEngineHelper.h"
+#import "doServiceContainer.h"
+#import "doIModuleExtManage.h"
+
 static do_TencentWX_App* instance;
 
 @implementation do_TencentWX_App
@@ -24,7 +27,8 @@ static do_TencentWX_App* instance;
 -(BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     //注册下个版本在加
-//    [WXApi registerApp:@"wxc422eccce175b3e1"];
+    NSString *weixinAppid = [[doServiceContainer Instance].ModuleExtManage GetThirdAppKey:@"tencentWX" :@"WXAppID" ];
+    [WXApi registerApp:weixinAppid];
     
     return YES;
 }
