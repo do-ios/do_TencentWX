@@ -285,7 +285,7 @@
         SendAuthResp *temp = (SendAuthResp*)resp;
         
         //        NSString *strTitle = [NSString stringWithFormat:@"Auth结果"];
-        //        NSString *strMsg = [NSString stringWithFormat:@"code:%@,state:%@,errcode:%d", temp.code, temp.state, temp.errCode];
+        //        NSString *strMsg = [NSString stringWithFormat:@"code:%@,state:%@,errCode:%d", temp.code, temp.state, temp.errCode];
         //
         //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         //        [alert show];
@@ -298,7 +298,7 @@
             [dict setObject:temp.lang forKey:@"lang"];
         if(temp.country!=nil)
             [dict setObject:temp.country forKey:@"country"];
-        [dict setObject:[NSNumber numberWithInt:temp.errCode ] forKey:@"errcode"];
+        [dict setObject:[NSNumber numberWithInt:temp.errCode ] forKey:@"errCode"];
         if(temp.code!=nil)
             [dict setObject:temp.code forKey:@"code"];
         doInvokeResult* result = [[doInvokeResult alloc]init];
