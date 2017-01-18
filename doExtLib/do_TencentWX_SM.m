@@ -21,7 +21,13 @@
 #import "doIPage.h"
 
 static unsigned long long ThumbImageSize = 32*1024;
-static unsigned long long OriginSize = 1*1024*1024;
+static unsigned long long OriginSize = 2*1024*1024;
+
+typedef struct ImgInfo{
+    unsigned long long limitSize ;
+    int resolution;
+    int type;
+} ScaleInfo;
 
 @interface do_TencentWX_SM (WeChat)<WXApiDelegate>
 {
@@ -108,17 +114,34 @@ static unsigned long long OriginSize = 1*1024*1024;
     NSString *url = [doJsonHelper GetOneText:_dictParas :@"url" :@""];
     NSString *image = [doJsonHelper GetOneText:_dictParas :@"image" :@""];
     NSString *audio = [doJsonHelper GetOneText:_dictParas :@"audio" :@""];
-    SendMessageToWXReq *req = [self getMessage:type withScene:scene withTitle:title withContent:content withUrl:url withImage:image withAudio:audio];
+    NSString *trumb = [doJsonHelper GetOneText:_dictParas :@"trumb" :@""];
+    SendMessageToWXReq *req = [self getMessage:type withScene:scene withTitle:title withContent:content withUrl:url withImage:image withTrumb:trumb withAudio:audio];
     [WXApi sendReq:req];
 }
 
-- (NSData *)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize;
+- (NSData *)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize :(int)type;
 {
-    UIGraphicsBeginImageContext(newSize);
-    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
-    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return UIImageJPEGRepresentation(newImage, 0.8);
+    UIImage* newImage = image;
+    if (type==0) {
+        UIGraphicsBeginImageContext(newSize);
+        [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+        newImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        CGRect rect = CGRectMake(0,0, newSize.width, newSize.height);
+        if (newSize.width>newSize.height) {
+            rect = CGRectMake((newSize.width-newSize.height)/2, 0, newSize.height, newSize.height);
+        }
+        CGImageRef imageRef = CGImageCreateWithImageInRect([newImage CGImage], rect);
+        newImage = [[UIImage alloc] initWithCGImage:imageRef];
+    }else{
+        UIGraphicsBeginImageContext(newSize);
+        [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+        newImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+    }
+    
+    return UIImageJPEGRepresentation(newImage, 1.0);
 }
 - (BOOL)isScale:(NSString *)path :(unsigned long long)limitSize
 {
@@ -127,7 +150,7 @@ static unsigned long long OriginSize = 1*1024*1024;
     unsigned long long s = limitSize;
     return size>s;
 }
-- (CGSize)caculateImageSize:(UIImage*)image :(BOOL)isScale :(int)value
+- (CGSize)caculateImageSize:(UIImage*)image :(BOOL)isScale :(int)value :(int)type
 {
     CGSize size = image.size;
     
@@ -139,7 +162,7 @@ static unsigned long long OriginSize = 1*1024*1024;
         CGFloat percent = 1;
         CGFloat h = size.height;
         CGFloat w = size.width;
-        if (size.height>size.width) {
+        if (type==0) {
             percent = size.width/size.height;
             h = value;
             w = value*percent;
@@ -154,10 +177,21 @@ static unsigned long long OriginSize = 1*1024*1024;
     
     return size;
 }
-- (SendMessageToWXReq *)getMessage:(int)type withScene:(int)scene withTitle:(NSString *)title withContent:(NSString *)content withUrl:(NSString *)url withImage:(NSString *)image withAudio:(NSString *)audio
+- (SendMessageToWXReq *)getMessage:(int)type withScene:(int)scene withTitle:(NSString *)title withContent:(NSString *)content withUrl:(NSString *)url withImage:(NSString *)image withTrumb:(NSString *)trumb withAudio:(NSString *)audio
 {
     SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
     req.scene = scene;
+    //大图2M以内，缩略图处理控制在32k以内，保证分享成功
+    NSData *(^ImageScale)(UIImage *,NSString *,ScaleInfo) = ^(UIImage * img,NSString *path,ScaleInfo info){
+        NSData *thrumbData = nil;
+        BOOL isScale = [self isScale:path :info.limitSize];
+        if (isScale) {
+            CGSize size = [self caculateImageSize:img :YES :info.resolution :info.type];
+            thrumbData = [self imageWithImage:img scaledToSize:size :info.type];
+        }else
+            thrumbData = UIImageJPEGRepresentation(img, 1.0);
+        return thrumbData;
+    };
     switch (type) {
         case 0:
         {
@@ -169,15 +203,19 @@ static unsigned long long OriginSize = 1*1024*1024;
             else
             {
                 NSString *imagePath = [doIOHelper GetLocalFileFullPath:scritEngine.CurrentPage.CurrentApp :image];
-                UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
-                BOOL isScale = [self isScale:imagePath :ThumbImageSize];
-                if (isScale) {
-                    message.thumbData = [self imageWithImage:image scaledToSize:[self caculateImageSize:image :YES :100]];
-                }else
-                    message.thumbData = UIImageJPEGRepresentation(image, 1.0);
+                UIImage *imageBig = [UIImage imageWithContentsOfFile:imagePath];
+                NSString *trumbPath = @"";
+                if (trumb.length>0) {
+                    trumbPath = [doIOHelper GetLocalFileFullPath:scritEngine.CurrentPage.CurrentApp :trumb];
+                }
+                UIImage *imageTrumb = [UIImage imageWithContentsOfFile:trumbPath];
+                ScaleInfo info1 = {ThumbImageSize,100,0};
+                if (imageTrumb) {
+                    message.thumbData = ImageScale(imageTrumb,trumbPath,info1);
+                }else{
+                    message.thumbData = ImageScale(imageBig,imagePath,info1);
+                }
             }
-            
-            
             message.title = title;
             message.description = content;
             WXWebpageObject *ext = [WXWebpageObject object];
@@ -196,12 +234,26 @@ static unsigned long long OriginSize = 1*1024*1024;
             //            message.description = content;
             WXImageObject *ext = [WXImageObject object];
             NSString *imagePath = [doIOHelper GetLocalFileFullPath:scritEngine.CurrentPage.CurrentApp :image];
-            UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfFile:imagePath]];
-            BOOL isScale = [self isScale:imagePath :OriginSize];
-            if (isScale) {
-                ext.imageData = [self imageWithImage:image scaledToSize:[self caculateImageSize:image :YES :1024]];
-            }else
-                ext.imageData = UIImageJPEGRepresentation(image, 1.0);
+            UIImage *imageBig = [UIImage imageWithData:[NSData dataWithContentsOfFile:imagePath]];
+            //缩略图
+            NSString *trumbPath = @"";
+            if (trumb.length>0) {
+                trumbPath = [doIOHelper GetLocalFileFullPath:scritEngine.CurrentPage.CurrentApp :trumb];
+            }
+            UIImage *imageTrumb = [UIImage imageWithContentsOfFile:trumbPath];
+            
+            ScaleInfo info = {OriginSize,1024,1};
+            if (imageBig) {
+                ext.imageData = ImageScale(imageBig,imagePath,info);
+            }
+            
+            ScaleInfo info1 = {ThumbImageSize,100,0};
+            if (imageTrumb) {
+                message.thumbData = ImageScale(imageTrumb,trumbPath,info1);
+            }else{
+                message.thumbData = ImageScale(imageBig,imagePath,info1);
+            }
+            
             message.mediaObject = ext;
             req.bText = NO;
             req.message = message;
@@ -219,12 +271,18 @@ static unsigned long long OriginSize = 1*1024*1024;
             else
             {
                 imagePath = [doIOHelper GetLocalFileFullPath:scritEngine.CurrentPage.CurrentApp :image];
-                UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
-                BOOL isScale = [self isScale:imagePath :ThumbImageSize];
-                if (isScale) {
-                    message.thumbData = [self imageWithImage:image scaledToSize:[self caculateImageSize:image :YES :100]];
-                }else
-                    message.thumbData = UIImageJPEGRepresentation(image, 1.0);
+                UIImage *imageBig = [UIImage imageWithContentsOfFile:imagePath];
+                NSString *trumbPath = @"";
+                if (trumb.length>0) {
+                    trumbPath = [doIOHelper GetLocalFileFullPath:scritEngine.CurrentPage.CurrentApp :trumb];
+                }
+                UIImage *imageTrumb = [UIImage imageWithContentsOfFile:trumbPath];
+                ScaleInfo info1 = {ThumbImageSize,100,0};
+                if (imageTrumb) {
+                    message.thumbData = ImageScale(imageTrumb,trumbPath,info1);
+                }else{
+                    message.thumbData = ImageScale(imageBig,imagePath,info1);
+                }
             }
             message.title = title;
             message.description = content;
